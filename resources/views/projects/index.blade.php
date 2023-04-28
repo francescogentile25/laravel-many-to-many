@@ -38,6 +38,7 @@
                     <th>Description</th>
                     <th>Link</th>
                     <th>Categoria</th>
+                    <th>Tecnologia</th>
                     <th>Slug</th>
                     <th>Data creazione</th>
                     <th>Data modifica</th>
@@ -54,6 +55,14 @@
                         <td>{{ $project->description }}</td>
                         <td>{{ $project->website_link }}</td>
                         <td>{{ $project->type ? $project->type->name : '-' }}</td>
+                        <td>
+                            @forelse($project->technologies as $technology)
+                                <span class="badge rounded-pill text-bg-primary">{{ $technology->name }}</span>
+                            @empty
+                                -
+                            @endforelse
+
+                        </td>
                         <td>{{ $project->slug }}</td>
                         <td>{{ $project->created_at->format('d/m/Y') }}</td>
                         <td>{{ $project->updated_at->format('d/m/Y') }}</td>
@@ -82,7 +91,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <th colspan="8">Nessun progetto trovato</th>
+                        <th colspan="9">Nessun progetto trovato</th>
                     </tr>
                 @endforelse
             </tbody>
