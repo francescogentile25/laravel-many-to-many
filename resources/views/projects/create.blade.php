@@ -45,7 +45,7 @@
                 <div class="mb-3">
                     <label for="technologies" class="form-label">Tecnologia</label>
                     <div class="d-flex flex-wrap gap-3 @error('technologies') is-invalid @enderror">
-                        @foreach ($technologies as $technology)
+                        @foreach ($technologies as $key => $technology)
                             <div class="form-check">
                                 <input name='technologies[]' @checked(in_array($technology->id, old('technologies', []))) class="form-check-input"
                                     type="checkbox" value="{{ $technology->id }}" id="flexCheckDefault">

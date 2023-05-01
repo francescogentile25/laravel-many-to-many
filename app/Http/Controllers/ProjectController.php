@@ -58,6 +58,7 @@ class ProjectController extends Controller
         if (isset($data['technologies'])) {
             $project->technologies()->attach($data['technologies']);
         }
+
         return to_route('projects.show', $project);
     }
 
@@ -99,6 +100,13 @@ class ProjectController extends Controller
             $data['slug'] = Str::slug($data['title']);
         }
         $project->update($data);
+
+        if (isset($data['technologies'])) {
+            $project->technologies()->sync($data['technologies']);
+        } else {
+            $project->technologies()->sync([]);
+        }
+
         return to_route('projects.show', $project);
     }
     public function restore(Project $project, Request $request)
@@ -118,6 +126,7 @@ class ProjectController extends Controller
     public function destroy(Project $project, Request $request)
     {
         if ($project->trashed()) {
+            // $project->technologies()->detach();
             $project->forceDelete(); // definitly elimination
             $request->session()->flash('message-delete', 'Il post è stato eliminato');
         } else {
